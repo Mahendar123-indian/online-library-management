@@ -1,0 +1,19 @@
+
+services:
+  library-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: online-library-app
+
+    ports:
+      - "3000:3000"
+
+    restart: unless-stopped
+
+    volumes:
+      - library_data:/app/backend/database
+
+volumes:
+  library_data:
