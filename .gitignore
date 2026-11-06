@@ -1,0 +1,27 @@
+
+# Node dependencies
+node_modules/
+backend/node_modules/
+
+# Environment variables
+.env
+.env.*
+
+# SQLite database
+backend/database/*.sqlite
+backend/database/*.sqlite-shm
+backend/database/*.sqlite-wal
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Build files
+build/
+dist/

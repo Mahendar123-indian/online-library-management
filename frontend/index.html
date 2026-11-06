@@ -1,0 +1,610 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Online Library Management System">
+    <title>LibraDesk | Library Management System</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="loginScreen" class="login-screen">
+    <div class="login-card">
+        <div class="brand-logo">
+            <i class="fa-solid fa-book-open"></i>
+        </div>
+
+        <h1>LibraDesk</h1>
+        <p class="login-subtitle">Library Management Portal</p>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label>Username</label>
+                <div class="input-wrapper">
+                    <i class="fa-regular fa-user"></i>
+                    <input type="text" id="username" placeholder="Enter username" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="password" placeholder="Enter password" required>
+                </div>
+            </div>
+
+            <button type="submit" class="primary-btn login-btn">
+                Sign In <i class="fa-solid fa-arrow-right"></i>
+            </button>
+
+            <p id="loginMessage" class="form-message"></p>
+        </form>
+
+        <div class="login-footer">
+            Online Library Management System
+        </div>
+    </div>
+</div>
+
+
+<!-- MAIN APPLICATION -->
+<div id="app" class="app hidden">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="sidebar">
+
+        <div class="sidebar-brand">
+            <div class="brand-icon">
+                <i class="fa-solid fa-book-open"></i>
+            </div>
+            <div>
+                <h2>LibraDesk</h2>
+                <span>LIBRARY PORTAL</span>
+            </div>
+            <button id="closeSidebar" class="mobile-close" aria-label="Close menu">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div class="nav-label">MAIN MENU</div>
+
+        <nav class="navigation">
+            <button class="nav-item active" data-page="dashboard">
+                <i class="fa-solid fa-house"></i>
+                <span>Dashboard</span>
+            </button>
+
+            <button class="nav-item" data-page="books">
+                <i class="fa-solid fa-book"></i>
+                <span>Books</span>
+            </button>
+
+            <button class="nav-item" data-page="students">
+                <i class="fa-solid fa-users"></i>
+                <span>Students</span>
+            </button>
+
+            <button class="nav-item" data-page="issue">
+                <i class="fa-solid fa-book-open-reader"></i>
+                <span>Issue Books</span>
+            </button>
+
+            <button class="nav-item" data-page="returns">
+                <i class="fa-solid fa-rotate-left"></i>
+                <span>Returns & Fines</span>
+            </button>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="sidebar-info">
+                <i class="fa-solid fa-shield-halved"></i>
+                <h4>Library System</h4>
+                <p>Manage your library resources efficiently.</p>
+                <span><i class="fa-solid fa-circle"></i> System Ready</span>
+            </div>
+
+            <button id="logoutBtn" class="logout-btn">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Sign Out
+            </button>
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOP HEADER -->
+        <header class="topbar">
+
+            <div class="topbar-left">
+                <button id="menuToggle" class="menu-toggle" aria-label="Open menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div>
+                    <span class="breadcrumb">Workspace /</span>
+                    <h3 id="pageTitle">Dashboard</h3>
+                </div>
+            </div>
+
+            <div class="topbar-right">
+                <div class="system-status">
+                    <span class="status-dot"></span>
+                    System Online
+                </div>
+
+                <button id="refreshBtn" class="icon-btn" title="Refresh data">
+                    <i class="fa-solid fa-rotate"></i>
+                </button>
+
+                <div class="admin-avatar">A</div>
+            </div>
+
+        </header>
+
+
+        <!-- PAGE CONTAINER -->
+        <div class="page-container">
+
+            <!-- DASHBOARD -->
+            <section id="dashboardPage" class="page-section active">
+
+                <div class="page-heading">
+                    <div>
+                        <span class="eyebrow">OVERVIEW</span>
+                        <h1>Welcome back, Administrator <span>👋</span></h1>
+                        <p>Here's what's happening in your library today.</p>
+                    </div>
+
+                    <div class="date-display">
+                        <i class="fa-regular fa-calendar"></i>
+                        <span id="currentDate">Today</span>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+                        <div class="stat-top">
+                            <span>Total Books</span>
+                            <div class="stat-icon purple">
+                                <i class="fa-solid fa-book"></i>
+                            </div>
+                        </div>
+                        <h2 id="totalBooks">0</h2>
+                        <p>Books in collection</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-top">
+                            <span>Total Students</span>
+                            <div class="stat-icon green">
+                                <i class="fa-solid fa-users"></i>
+                            </div>
+                        </div>
+                        <h2 id="totalStudents">0</h2>
+                        <p>Registered students</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-top">
+                            <span>Available Books</span>
+                            <div class="stat-icon blue">
+                                <i class="fa-solid fa-book-open"></i>
+                            </div>
+                        </div>
+                        <h2 id="availableBooks">0</h2>
+                        <p>Ready to issue</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-top">
+                            <span>Issued Books</span>
+                            <div class="stat-icon orange">
+                                <i class="fa-solid fa-bookmark"></i>
+                            </div>
+                        </div>
+                        <h2 id="issuedBooks">0</h2>
+                        <p>Currently borrowed</p>
+                    </div>
+
+                </div>
+
+                <div class="dashboard-grid">
+
+                    <div class="content-card">
+                        <div class="card-heading">
+                            <div>
+                                <h3>Recent Books</h3>
+                                <p>Recently added books</p>
+                            </div>
+                            <button class="text-btn" data-goto="books">
+                                View all <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Book Title</th>
+                                        <th>Author</th>
+                                        <th>Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recentBooksTable">
+                                    <tr>
+                                        <td colspan="3" class="empty-cell">Loading books...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="content-card quick-card">
+                        <div class="card-heading">
+                            <div>
+                                <h3>Quick Actions</h3>
+                                <p>Manage your library</p>
+                            </div>
+                        </div>
+
+                        <button class="quick-action" data-goto="books">
+                            <span class="quick-icon purple">
+                                <i class="fa-solid fa-plus"></i>
+                            </span>
+                            <span>
+                                <strong>Add New Book</strong>
+                                <small>Add a book to the collection</small>
+                            </span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+
+                        <button class="quick-action" data-goto="students">
+                            <span class="quick-icon green">
+                                <i class="fa-solid fa-user-plus"></i>
+                            </span>
+                            <span>
+                                <strong>Register Student</strong>
+                                <small>Add a new student</small>
+                            </span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+
+                        <button class="quick-action" data-goto="issue">
+                            <span class="quick-icon blue">
+                                <i class="fa-solid fa-book-open"></i>
+                            </span>
+                            <span>
+                                <strong>Issue a Book</strong>
+                                <small>Issue books to students</small>
+                            </span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- BOOKS PAGE -->
+            <section id="booksPage" class="page-section">
+
+                <div class="section-heading">
+                    <div>
+                        <span class="eyebrow">COLLECTION</span>
+                        <h1>Book Management</h1>
+                        <p>Add, update, delete and search library books.</p>
+                    </div>
+
+                    <button id="addBookBtn" class="primary-btn">
+                        <i class="fa-solid fa-plus"></i> Add New Book
+                    </button>
+                </div>
+
+                <div class="content-card">
+
+                    <div class="toolbar">
+                        <div class="search-box">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="search" id="bookSearch"
+                                   placeholder="Search by title or author...">
+                        </div>
+                        <span id="bookCount" class="record-count">0 books</span>
+                    </div>
+
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Book Title</th>
+                                    <th>Author</th>
+                                    <th>Quantity</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="booksTable">
+                                <tr><td colspan="6" class="empty-cell">Loading...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- STUDENTS PAGE -->
+            <section id="studentsPage" class="page-section">
+
+                <div class="section-heading">
+                    <div>
+                        <span class="eyebrow">STUDENT RECORDS</span>
+                        <h1>Student Management</h1>
+                        <p>Register and manage library students.</p>
+                    </div>
+
+                    <button id="addStudentBtn" class="primary-btn">
+                        <i class="fa-solid fa-user-plus"></i> Register Student
+                    </button>
+                </div>
+
+                <div class="content-card">
+
+                    <div class="toolbar">
+                        <div class="search-box">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="search" id="studentSearch"
+                                   placeholder="Search students by name or email...">
+                        </div>
+                        <span id="studentCount" class="record-count">0 students</span>
+                    </div>
+
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Student ID</th>
+                                    <th>Student Name</th>
+                                    <th>Email Address</th>
+                                </tr>
+                            </thead>
+                            <tbody id="studentsTable">
+                                <tr><td colspan="3" class="empty-cell">Loading...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ISSUE BOOK PAGE -->
+            <section id="issuePage" class="page-section">
+
+                <div class="section-heading">
+                    <div>
+                        <span class="eyebrow">BOOK CIRCULATION</span>
+                        <h1>Issue Books</h1>
+                        <p>Issue available books to registered students.</p>
+                    </div>
+                </div>
+
+                <div class="form-card">
+
+                    <div class="form-card-heading">
+                        <div class="large-form-icon">
+                            <i class="fa-solid fa-book-open-reader"></i>
+                        </div>
+                        <div>
+                            <h2>New Book Issue</h2>
+                            <p>Complete the details below to issue a book.</p>
+                        </div>
+                    </div>
+
+                    <form id="issueForm">
+
+                        <div class="form-group">
+                            <label for="issueStudent">Select Student</label>
+                            <select id="issueStudent" required>
+                                <option value="">Choose a student</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="issueBook">Select Book</label>
+                            <select id="issueBook" required>
+                                <option value="">Choose an available book</option>
+                            </select>
+                        </div>
+
+                        <div class="info-box">
+                            <i class="fa-solid fa-circle-info"></i>
+                            <span>Standard borrowing period: 14 days. Overdue fine: ₹5 per day.</span>
+                        </div>
+
+                        <button type="submit" class="primary-btn form-submit">
+                            <i class="fa-solid fa-bookmark"></i> Issue Book
+                        </button>
+
+                        <p id="issueMessage" class="form-message"></p>
+
+                    </form>
+
+                </div>
+
+            </section>
+
+
+            <!-- RETURNS PAGE -->
+            <section id="returnsPage" class="page-section">
+
+                <div class="section-heading">
+                    <div>
+                        <span class="eyebrow">BOOK CIRCULATION</span>
+                        <h1>Returns & Fines</h1>
+                        <p>Track borrowed books and calculate overdue fines.</p>
+                    </div>
+                </div>
+
+                <div class="content-card">
+
+                    <div class="toolbar">
+                        <div class="search-box">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="search" id="returnSearch"
+                                   placeholder="Search student or book...">
+                        </div>
+                        <span id="returnCount" class="record-count">0 records</span>
+                    </div>
+
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Student</th>
+                                    <th>Book</th>
+                                    <th>Issue Date</th>
+                                    <th>Due Date</th>
+                                    <th>Status</th>
+                                    <th>Fine</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="returnsTable">
+                                <tr><td colspan="7" class="empty-cell">Loading...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+        <footer class="app-footer">
+            <span>© 2026 LibraDesk · Online Library Management System</span>
+            <span>Powered by Node.js & SQLite</span>
+        </footer>
+
+    </main>
+
+</div>
+
+
+<!-- BOOK MODAL -->
+<div id="bookModal" class="modal">
+    <div class="modal-card">
+
+        <div class="modal-heading">
+            <div>
+                <h2 id="bookModalTitle">Add New Book</h2>
+                <p>Enter the book information below.</p>
+            </div>
+            <button class="modal-close" data-close="bookModal" aria-label="Close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <form id="bookForm">
+            <input type="hidden" id="editBookId">
+
+            <div class="form-group">
+                <label for="bookTitle">Book Title</label>
+                <input type="text" id="bookTitle" placeholder="Enter book title" required>
+            </div>
+
+            <div class="form-group">
+                <label for="bookAuthor">Author</label>
+                <input type="text" id="bookAuthor" placeholder="Enter author name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="bookQuantity">Quantity</label>
+                <input type="number" id="bookQuantity" min="0" value="1" required>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="secondary-btn" data-close="bookModal">Cancel</button>
+                <button type="submit" class="primary-btn">Save Book</button>
+            </div>
+
+            <p id="bookMessage" class="form-message"></p>
+        </form>
+
+    </div>
+</div>
+
+
+<!-- STUDENT MODAL -->
+<div id="studentModal" class="modal">
+    <div class="modal-card">
+
+        <div class="modal-heading">
+            <div>
+                <h2>Register New Student</h2>
+                <p>Enter student registration details.</p>
+            </div>
+            <button class="modal-close" data-close="studentModal" aria-label="Close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <form id="studentForm">
+
+            <div class="form-group">
+                <label for="studentName">Full Name</label>
+                <input type="text" id="studentName" placeholder="Enter full name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="studentEmail">Email Address</label>
+                <input type="email" id="studentEmail" placeholder="Enter email address" required>
+            </div>
+
+            <div class="form-group">
+                <label for="studentPassword">Password</label>
+                <input type="password" id="studentPassword" minlength="6" placeholder="Create password" required>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="secondary-btn" data-close="studentModal">Cancel</button>
+                <button type="submit" class="primary-btn">Register Student</button>
+            </div>
+
+            <p id="studentMessage" class="form-message"></p>
+        </form>
+
+    </div>
+</div>
+
+
+<!-- NOTIFICATION -->
+<div id="toast" class="toast">
+    <i class="fa-solid fa-circle-check"></i>
+    <span id="toastMessage">Success</span>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
